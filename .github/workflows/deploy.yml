@@ -25,8 +25,7 @@ jobs:
         inlineScript: |
           az storage blob upload-batch \
             --destination '$web' \
-            --source . \
+            --source site \
             --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
-            --pattern "*.html" "*.css" \
             --overwrite true \
             --auth-mode login
