@@ -27,5 +27,6 @@ jobs:
             --destination '$web' \
             --source . \
             --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+            --pattern "*.html" "*.css" \
             --overwrite true \
             --auth-mode login
