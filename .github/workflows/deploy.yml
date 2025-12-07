@@ -1,0 +1,31 @@
+name: Deploy Static Website to Azure Storage
+
+on:
+  push:
+    branches:
+      - main     # Change if your default branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Login to Azure using service principal
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Upload files to Azure Storage static website
+      uses: azure/cli@v1
+      with:
+        inlineScript: |
+          az storage blob upload-batch \
+            --destination '$web' \
+            --source . \
+            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+            --overwrite true \
+            --auth-mode login
